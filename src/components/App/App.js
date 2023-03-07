@@ -112,7 +112,7 @@ export class App extends Component {
 
         {showModal && (
           <Modal onClose={this.toggleModal}>
-            <img src={largeImage} alt="" />
+            <img src={largeImage} alt="Big images" />
           </Modal>
         )}
         {perPageImg === PER_PAGE && !isLoading && (
