@@ -4,38 +4,34 @@ import { Overlay, OpenModal } from './Modal.styled';
 
 export class Modal extends Component {
   componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown = evt => {
     if (evt.code === 'Escape') {
-      this.props.onCloseModal();
+      this.props.onClose();
     }
   };
 
-  handleBackdropClick = evt => {
+  handleOverlayClick = evt => {
     if (evt.currentTarget === evt.target) {
-      this.props.onCloseModal();
+      this.props.onClose();
     }
   };
 
   render() {
-    const { largeImageURL, tags } = this.props;
-
     return (
-      <Overlay onClick={this.handleBackdropClick}>
-        <OpenModal>
-          <img src={largeImageURL} alt={tags} />
-        </OpenModal>
+      <Overlay onClick={this.handleOverlayClick}>
+        <OpenModal>{this.props.children}</OpenModal>
       </Overlay>
     );
   }
 }
 
 Modal.propTypes = {
-  onCloseModal: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };

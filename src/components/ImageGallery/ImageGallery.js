@@ -2,23 +2,34 @@ import PropTypes from 'prop-types';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { List } from './ImageGallery.styled';
 
-export const ImageGallery = ({ images, onOpenModal }) => {
+export const ImageGallery = ({ images, onClick }) => {
   return (
-    <List>
-      {images.map(({ id, webformatURL, largeImageURL, tags }) => (
-        <ImageGalleryItem
-          key={id}
-          webformatURL={webformatURL}
-          largeImageURL={largeImageURL}
-          tags={tags}
-          onOpenModal={onOpenModal}
-        />
-      ))}
-    </List>
+    <div>
+      <List>
+        {images.map(({ id, largeImageURL, tags, webformatURL }) => {
+          return (
+            <ImageGalleryItem
+              key={id}
+              largeImage={largeImageURL}
+              tags={tags}
+              preview={webformatURL}
+              onClick={onClick}
+            />
+          );
+        })}
+      </List>
+    </div>
   );
 };
 
 ImageGallery.propTypes = {
-  images: PropTypes.array.isRequired,
-  onOpenModal: PropTypes.func.isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string,
+    })
+  ).isRequired,
+  onClick: PropTypes.func,
 };
